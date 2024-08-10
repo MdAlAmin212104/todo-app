@@ -1,20 +1,18 @@
-import { useState } from "react";
+import { useRef } from "react";
 
 const NewTodo = (props) => {
-  const [todo, setTodo] = useState({ title: "", desc: "" });
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-    setTodo((oldTodo) => ({
-      ...oldTodo,
-      [name]: value,
-    }));
-  };
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.onAddTodo(todo);
-    setTodo({ title: "", desc: "" });
+    const newTodo = {
+      title: titleRef.current.value,
+      desc: descRef.current.value,
+    };
+    props.onAddTodo(newTodo);
+    titleRef.current.value = "";
+    descRef.current.value = "";
   };
 
   return (
@@ -30,8 +28,7 @@ const NewTodo = (props) => {
           type="text"
           id="title"
           name="title"
-          value={todo.title}
-          onChange={handleChange}
+          ref={titleRef}
           className="border-none p-1 rounded-lg bg-white text-black w-full"
         />
       </div>
@@ -42,8 +39,7 @@ const NewTodo = (props) => {
         <textarea
           name="desc"
           id="desc"
-          value={todo.desc}
-          onChange={handleChange}
+          ref={descRef}
           className="border-none resize-none p-1 rounded-lg bg-white w-full text-black"
         ></textarea>
       </div>
