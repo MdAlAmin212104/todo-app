@@ -1,6 +1,8 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { TodoContext } from "./Context";
 
-const NewTodo = (props) => {
+const NewTodo = () => {
+  const {dispatch, ACTIONS} = useContext(TodoContext);
   const titleRef = useRef(null);
   const descRef = useRef(null);
 
@@ -10,7 +12,7 @@ const NewTodo = (props) => {
       title: titleRef.current.value,
       desc: descRef.current.value,
     };
-    props.onAddTodo(newTodo);
+    dispatch({ type: ACTIONS.ADD_TODO, payload: newTodo });
     titleRef.current.value = "";
     descRef.current.value = "";
   };

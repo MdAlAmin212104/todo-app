@@ -1,12 +1,17 @@
+import { useContext } from "react";
 import SingleTodo from "./SingleTodo";
+import { TodoContext } from "./Context";
 
-const Todo = (props) => {
-  //console.log(props.todo);
-  const todo = props.todo;
+const Todo = () => {
+  const {todos, dispatch, ACTIONS } = useContext(TodoContext)
+  const handleRemove = (id) => {
+    dispatch({ type: ACTIONS.REMOVE_TODO, payload: { id } });
+  };
+
   return (
     <div className="w-1/2 bg-gray-800 text-white p-2 rounded-lg overflow-scroll h-[60vh]">
-      {todo.map((todo) => (
-        <SingleTodo key={todo.id} todo={todo} id={todo.id} onRemoveTodo={props.onRemoveTodo}></SingleTodo>
+      {todos.map((todo) => (
+        <SingleTodo key={todo.id} todo={todo} handleRemove={handleRemove}></SingleTodo>
       ))}
     </div>
   );

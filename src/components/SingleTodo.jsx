@@ -1,10 +1,8 @@
 import { MdDelete } from "react-icons/md";
 
-const SingleTodo = (props) => {
-  const {id, title, desc } = props.todo;
-  const handleClick = (id) =>{
-    props.onRemoveTodo(id);
-}
+const SingleTodo = ({todo, handleRemove}) => {
+  const {id, title, desc} = todo;
+  
   return (
     <article className="bg-gray-900 hover:bg-gray-800 m-2 rounded-lg flex justify-between p-2">
       <div>
@@ -12,7 +10,7 @@ const SingleTodo = (props) => {
         <p className="opacity-60 text-left">{desc}</p>
       </div>
       <div>
-        <button className="text-red-600 text-3xl text-left" onClick={() => {handleClick(id)}}><MdDelete /></button>
+        <button className="text-red-600 text-3xl text-left" onClick={() => handleRemove(id)}><MdDelete /></button>
     </div>
     </article>
   );
